@@ -13,8 +13,8 @@
   
   .clock-con .clock {
     display: flex;
-    height: 250px;
-    width: 250px;
+    height: 220px;
+    width: 220px;
     border-radius: 10%;
     align-items: center;
     justify-content: center;
@@ -59,7 +59,7 @@
   
   .indicator .hand {
     position: absolute;
-    height: 80px;
+    height: 65px;
     width: 4px;
     bottom: 0;
     border-radius: 25px;
@@ -68,13 +68,13 @@
   }
   
   .hand.minute {
-    height: 70px;
+    height: 53px;
     width: 5px;
     background: var(--black-color);
   }
   
   .hand.hour {
-    height: 52px;
+    height: 45px;
     width: 8px;
     background: var(--black-color);
   }

@@ -56,7 +56,14 @@ const labels = Array.from({ length: 12 }, (_, index) => index + 1);
           </div>
         </div>
         <div className="col-md-6 text-end">
-          Right
+          <div className="d-flex justify-content-end">
+            <div className="att_btns">
+              <button className="btn btn-primary me-3">In</button>
+            </div>
+            <div className="att_btns">
+              <button className="btn btn-primary">Out</button>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
