@@ -42,7 +42,9 @@ const Navbar = () => {
                     <IoMenu className='text-3xl text-white cursor-pointer lg:hidden' onClick={() => setSidebarOpen(true)} />
                     <div className="text-white">
                         {/* <h3 className='text-2xl font-bold'>Dha<span className='text-[#F31559]'>ram</span></h3> */}
-                        <img className='w-[80px]' src="/Images/LightLogo.png" alt="Logo" />
+                        <Link to={"/"}>
+                            <img className='w-[80px]' src="/Images/LightLogo.png" alt="Logo" />
+                        </Link>
                     </div>
                     <div className="hidden lg:block">
                         <ul className='flex gap-4 text-white'>
@@ -61,8 +63,8 @@ const Navbar = () => {
                         <img src="https://avatars.githubusercontent.com/u/122605883?v=4" alt="user" />
                     </div> */}
                     <div className="flex gap-4">
-                        <button className={`px-4 py-2 rounded-md bg-[#D52636] text-white font-semibold hover:bg-[#d52634ce] focus:outline-none focus:bg-blue-600`}>Login</button>
-                        <button className={`px-4 py-2 rounded-md bg-[#D52636] text-white font-semibold hover:bg-[#d52634ce] focus:outline-none focus:bg-blue-600`}>Signup</button>
+                        <Link to={"/login"} className={`px-4 py-2 rounded-md bg-[#D52636] text-white font-semibold hover:bg-[#d52634ce] focus:outline-none focus:bg-[#D52636]`}>Login</Link>
+                        <Link to={"/signup"} className={`px-4 py-2 rounded-md bg-[#D52636] text-white font-semibold hover:bg-[#d52634ce] focus:outline-none focus:bg-[#D52636]`}>Signup</Link>
                     </div>
                 </div>
             </nav>
