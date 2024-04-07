@@ -1,9 +1,10 @@
 import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import { userModel } from "../models/userSchema.js";
-import ErrorHandler from "./error.js";
+import ErrorHandler from "../middlewares/error.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import {sendToken} from '../utils/jwtUtils.js'
 
 dotenv.config();
 const JWT_KEY = "thisissecurejwttokenkeyechonews";
@@ -49,34 +50,22 @@ export const Login = catchAsyncErrors(async(req, res, next) => {
         return next(new ErrorHandler("Please Fill all fields", 401));
     };
 
-    const isEmailExist = await userModel.findOne({email});
+    const user = await userModel.findOne({email});
     
-    if(!isEmailExist){
+    if(!user){
         return next(new ErrorHandler("Please Provide Valid Details - Email"));
     }
 
-    const passwordMatch = await bcrypt.compare(password, isEmailExist.password);
+    const passwordMatch = await bcrypt.compare(password, user.password);
 
     if(!passwordMatch){
         return next(new ErrorHandler("Please Provide Valid Details - Password"));
     }
 
-    if(isEmailExist.role !== role){
-        return next(new ErrorHandler(`User with provide email and ${role} not found`, 401));
+    if(user.role !== role){
+        return next(new ErrorHandler(`User with provide email ${role} not found`, 401));
     }
 
-    const user = {
-        id:{
-            userID: userModel._id
-        }
-    }
-
-    const token = jwt.sign(user, JWT_KEY);
-
-    res.status(201).json({
-        success: true,
-        message: "Log In Successfuly!",
-        token
-    })
+    const token = sendToken(user, 201, res, "User Login Successfully");
 
 })
