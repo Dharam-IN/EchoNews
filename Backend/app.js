@@ -14,7 +14,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/v1/user", userRouter);
-app.use("/api/v1/post/", postRouter);
+app.use("/api/v1/post", postRouter);
 
 // DB
 dbConnection();

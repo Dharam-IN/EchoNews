@@ -5,7 +5,7 @@ import postSchema from "../models/postSchema.js";
 export const Post = catchAsyncErrors(async (req, res, next) => {
     // Check Role 
     const {role} = req.user;
-    if(role === "Author"){
+    if(role !== "Author"){
         return next(new ErrorHandler("User Don't have access this resourse", 400));
     }
 
