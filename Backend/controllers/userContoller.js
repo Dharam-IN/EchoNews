@@ -66,6 +66,17 @@ export const Login = catchAsyncErrors(async(req, res, next) => {
         return next(new ErrorHandler(`User with provide email ${role} not found`, 401));
     }
 
-    const token = sendToken(user, 201, res, "User Login Successfully");
+    sendToken(user, 201, res, "User Login Successfully");
 
+})
+
+export const Logout = catchAsyncErrors(async(req, res, next) => {
+    // console.log(req.cookies)
+    res.status(201).cookie("token", "", {
+        httpOnly: true,
+        expires: new Date(Date.now())
+    }).json({
+        success: true,
+        message: "User Logout Successfully"
+    })
 })
