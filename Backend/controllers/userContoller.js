@@ -8,75 +8,105 @@ import {sendToken} from '../utils/jwtUtils.js'
 
 dotenv.config();
 const JWT_KEY = "thisissecurejwttokenkeyechonews";
-// const JWT_KEY = process.env.JWT_SECURE;
-// console.log(process.env.JWT_SECURE)
 
 export const Register = catchAsyncErrors(async (req, res, next) => {
-    const {name, email, phone, password, role} = req.body;
-    if(!name, !email, !phone, !password, !role){
-        return next(new ErrorHandler("Please Fill All Fields", 401));
+    try {
+        const { name, email, phone, password, role } = req.body;
+        if (!name || !email || !phone || !password || !role) {
+            throw new ErrorHandler("Please Fill All Fields", 401);
+        }
+
+        const isEmail = await userModel.findOne({ email });
+        if (isEmail) {
+            // throw new ErrorHandler("This Email Already Exists, try another email", 401);
+            return res.status(401).json({
+                success: false,
+                message: "This Email Already Exists, try another email"
+            })
+
+        }
+
+
+        const saltRound = 10;
+        const hashpassword = await bcrypt.hash(password, saltRound);
+
+        const user = await userModel.create({
+            name,
+            email,
+            phone,
+            password: hashpassword,
+            role
+        });
+
+        res.status(201).json({
+            success: true,
+            message: "User Registered Successfully",
+            user
+        });
+    } catch (error) {
+        next(error); // Pass the error to the global error handler
     }
+});
 
-    const isEmail = await userModel.findOne({email: email});
-    console.log(isEmail);
-    if(isEmail){
-        return next(new ErrorHandler("This Email Allready Exists, try another email", 401));
+export const Login = catchAsyncErrors(async (req, res, next) => {
+    try {
+        const { email, password, role } = req.body;
+        if (!email || !password || !role) {
+            throw new ErrorHandler("Please Fill all fields", 401);
+        }
+
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            // throw new ErrorHandler("Please Provide Valid Details - Email", 401);
+            return res.status(401).json({
+                success: false,
+                message: "Please Provide Valid Details"
+            })
+        }
+
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!passwordMatch) {
+            // throw new ErrorHandler("Please Provide Valid Details - Password", 401);
+            return res.status(401).json({
+                success: false,
+                message: "Please Provide Valid Details"
+            })
+        }
+
+        if (user.role !== role) {
+            // throw new ErrorHandler(`User with provided email and ${role} not found`, 401);
+            return res.status(401).json({
+                success: false,
+                message: `User with provided email and ${role} not found`
+            })
+        }
+
+        sendToken(user, 201, res, "User Login Successfully");
+    } catch (error) {
+        next(error); // Pass the error to the global error handler
     }
+});
 
-    const saltRound = 10;
-    const hashpassword = await bcrypt.hash(password, saltRound)
+export const Logout = catchAsyncErrors(async (req, res, next) => {
+    try {
+        res.status(201).cookie("token", "", {
+            httpOnly: true,
+            expires: new Date(Date.now())
+        }).json({
+            success: true,
+            message: "User Logout Successfully"
+        });
+    } catch (error) {
+        next(error); // Pass the error to the global error handler
+    }
+});
 
-    const user = await userModel.create({
-        name,
-        email,
-        phone,
-        password: hashpassword,
-        role
-    });
+
+export const getUser = catchAsyncErrors(async(req, res, next) => {
+    const user = req.user;
 
     res.status(200).json({
         success: true,
-        message: "User Register Successfully",
         user
-    });
-})
-
-
-// Login Controller
-export const Login = catchAsyncErrors(async(req, res, next) => {
-    const {email, password, role} = req.body;
-
-    if(!email, !password, !role){
-        return next(new ErrorHandler("Please Fill all fields", 401));
-    };
-
-    const user = await userModel.findOne({email});
-    
-    if(!user){
-        return next(new ErrorHandler("Please Provide Valid Details - Email"));
-    }
-
-    const passwordMatch = await bcrypt.compare(password, user.password);
-
-    if(!passwordMatch){
-        return next(new ErrorHandler("Please Provide Valid Details - Password"));
-    }
-
-    if(user.role !== role){
-        return next(new ErrorHandler(`User with provide email ${role} not found`, 401));
-    }
-
-    sendToken(user, 201, res, "User Login Successfully");
-
-})
-
-export const Logout = catchAsyncErrors(async(req, res, next) => {
-    // console.log(req.cookies)
-    res.status(201).cookie("token", "", {
-        httpOnly: true,
-        expires: new Date(Date.now())
-    }).json({
-        success: true,
-        message: "User Logout Successfully"
     })
 })

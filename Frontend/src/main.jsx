@@ -8,6 +8,7 @@ import About from './Pages/About.jsx'
 import Contact from './Pages/Contact.jsx'
 import Login from './Components/Login.jsx'
 import Signup from './Components/Signup.jsx'
+import { IsAuthorizedContextProvider } from './context/CustomContext.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,10 +22,13 @@ const router = createBrowserRouter(
   )
 )
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router}>
-      <Layout/>
-    </RouterProvider>
+      <IsAuthorizedContextProvider>
+        <RouterProvider router={router}>
+            <Layout/>
+        </RouterProvider>
+      </IsAuthorizedContextProvider>
   </React.StrictMode>,
 )
