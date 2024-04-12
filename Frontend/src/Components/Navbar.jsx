@@ -7,7 +7,7 @@ import { CgProfile } from "react-icons/cg";
 import { IoLogOutOutline } from "react-icons/io5";
 import { isAuthorizedContext } from '../context/CustomContext';
 import axios from 'axios';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Navbar = () => {
     const BACKEND_URI = import.meta.env.VITE_BACKEND_URI;
@@ -67,7 +67,7 @@ const Navbar = () => {
                                 user && user.role == "User" ? 
                                 <>
                                     <li className='text-lg cursor-pointer hover:text-[#D52636]'>
-                                        <NavLink to="/">Technology</NavLink>
+                                        <NavLink to="/createpost">Technology</NavLink>
                                     </li>
                                     <li className='text-lg cursor-pointer hover:text-[#D52636]'>
                                         <NavLink to="/">Business</NavLink>
@@ -80,7 +80,7 @@ const Navbar = () => {
                                 user && user.role == "Author" ? 
                                 <>
                                     <li className='text-lg cursor-pointer hover:text-[#D52636]'>
-                                        <NavLink to="/">Create New Post</NavLink>
+                                        <NavLink to="/createpost">Create New Post</NavLink>
                                     </li>
                                     <li className='text-lg cursor-pointer hover:text-[#D52636]'>
                                         <NavLink to="/">My Posts</NavLink>
@@ -138,6 +138,32 @@ const Navbar = () => {
                             <li className='text-lg cursor-pointer bg-[#6587b7] text-white mb-3 p-2 w-full rounded-xl hover:bg-[#40679E]'>
                                 <NavLink to="/">Home</NavLink>
                             </li>
+                            {
+                                user && user.role == "User" ? 
+                                <>
+                                    <li className='text-lg cursor-pointer bg-[#6587b7] text-white mb-3 p-2 w-full rounded-xl hover:bg-[#40679E]'>
+                                        <NavLink to="/createpost">Technology</NavLink>
+                                    </li>
+                                    <li className='text-lg cursor-pointer bg-[#6587b7] text-white mb-3 p-2 w-full rounded-xl hover:bg-[#40679E]'>
+                                        <NavLink to="/">Business</NavLink>
+                                    </li>
+                                </>
+                                :
+                                ""
+                            }
+                            {
+                                user && user.role == "Author" ? 
+                                <>
+                                    <li className='text-lg cursor-pointer bg-[#6587b7] text-white mb-3 p-2 w-full rounded-xl hover:bg-[#40679E]'>
+                                        <NavLink to="/createpost">Create New Post</NavLink>
+                                    </li>
+                                    <li className='text-lg cursor-pointer bg-[#6587b7] text-white mb-3 p-2 w-full rounded-xl hover:bg-[#40679E]'>
+                                        <NavLink to="/">My Posts</NavLink>
+                                    </li>
+                                </>
+                                :
+                                ""
+                            }
                             <li className='text-lg cursor-pointer bg-[#6587b7] text-white mb-3 p-2 w-full rounded-xl hover:bg-[#40679E]'>
                                 <NavLink to="/">About</NavLink>
                             </li>
@@ -148,6 +174,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
+      <Toaster />
         </>
     );
 };

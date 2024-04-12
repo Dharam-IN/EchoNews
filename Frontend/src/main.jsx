@@ -10,6 +10,7 @@ import Login from './Components/Login.jsx'
 import Signup from './Components/Signup.jsx'
 import { IsAuthorizedContextProvider, isAuthorizedContext } from './context/CustomContext.jsx'
 import axios from 'axios'
+import CreatePost from './Pages/CreatePost.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
       <Route path='/contact' element={<Contact/>}/>
       <Route path='/login' element={<Login/>}/>
       <Route path='/signup' element={<Signup/>}/>
+      <Route path='/createpost' element={<CreatePost/>}/>
     </Route>
   )
 )
