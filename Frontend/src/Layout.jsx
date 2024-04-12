@@ -8,7 +8,7 @@ import axios from 'axios';
 const Layout = () => {
 
 const {isAuthorized, setIsAuthorized, user, setUser} = useContext(isAuthorizedContext);
-// console.log(user)
+console.log(user)
 
 useEffect(() => {
   const fetchUser =async () => {

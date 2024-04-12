@@ -83,6 +83,7 @@ export const Login = catchAsyncErrors(async (req, res, next) => {
         }
 
         sendToken(user, 201, res, "User Login Successfully");
+        console.log(sendToken)
     } catch (error) {
         next(error); // Pass the error to the global error handler
     }

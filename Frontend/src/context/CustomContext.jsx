@@ -7,7 +7,7 @@ export const isAuthorizedContext = createContext({
 
 export const IsAuthorizedContextProvider = ({children}) => {
     const [isAuthorized, setIsAuthorized] = useState(false);
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState();
 
     return (
         <isAuthorizedContext.Provider value={{isAuthorized, setIsAuthorized, user, setUser}}>

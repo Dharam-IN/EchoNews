@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { isAuthorizedContext } from '../context/CustomContext';
@@ -10,7 +10,9 @@ const Login = () => {
   const BACKEND_URI = import.meta.env.VITE_BACKEND_URI;
 
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
+  
   const {isAuthorized, setIsAuthorized, user, setUser} = useContext(isAuthorizedContext);
   // console.log(user)
   const [userData, setUserData] = useState({
@@ -48,6 +50,7 @@ const Login = () => {
           setUserData({ role: "", email: "", password: "" });
           setIsAuthorized(true);
           setUser(res.data.user);
+          navigate("/");
       }
     } catch (error) {
       console.log(error)
