@@ -37,7 +37,13 @@ const Signup = () => {
         email,
         phone,
         password
-      });
+      },
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    });
       console.log(res)
       toast.success(res.data.message);
       if (res.status === 201) {
@@ -68,7 +74,7 @@ const Signup = () => {
             <select name="role" value={userData.role} onChange={UserDetailsAdd} className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight">
               <option value="null">Select Your Role</option>
               <option value="User">User</option>
-              <option value="Admin">Admin</option>
+              <option value="Author">Author</option>
             </select>
           </div>
           <div className="mb-6">

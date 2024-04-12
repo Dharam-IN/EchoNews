@@ -12,7 +12,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const {isAuthorized, setIsAuthorized, user, setUser} = useContext(isAuthorizedContext);
-
+  // console.log(user)
   const [userData, setUserData] = useState({
     role: "",
     email: "",
@@ -32,22 +32,23 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post(`${BACKEND_URI}/api/v1/user/login`, {
-        role,
-        email,
-        password
-      });
+      const res = await axios.post(`${BACKEND_URI}/api/v1/user/login`,
+      {role,email,password},
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true
+      }
+    );
+    console.log(res);
 
       toast.success(res.data.message);
       if (res.status === 201) {
-        setUserData({
-          role: "",
-          email: "",
-          password: ""
-        });
+          setUserData({ role: "", email: "", password: "" });
+          setIsAuthorized(true);
+          setUser(res.data.user);
       }
-      localStorage.setItem("token", res.data.token);
-      setUser(res.data.user)
     } catch (error) {
       console.log(error)
       if (error.response) {
@@ -67,7 +68,7 @@ const Login = () => {
             <select name="role" value={userData.role} onChange={UserDetailsAdd} className="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight">
               <option value="null">Select Your Role</option>
               <option value="User">User</option>
-              <option value="Admin">Admin</option>
+              <option value="Author">Author</option>
             </select>
           </div>
           <div className="mb-6">

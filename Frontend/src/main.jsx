@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
@@ -8,7 +8,8 @@ import About from './Pages/About.jsx'
 import Contact from './Pages/Contact.jsx'
 import Login from './Components/Login.jsx'
 import Signup from './Components/Signup.jsx'
-import { IsAuthorizedContextProvider } from './context/CustomContext.jsx'
+import { IsAuthorizedContextProvider, isAuthorizedContext } from './context/CustomContext.jsx'
+import axios from 'axios'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
     </Route>
   )
 )
+
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(

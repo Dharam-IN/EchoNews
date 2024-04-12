@@ -11,6 +11,7 @@ const JWT_KEY = "thisissecurejwttokenkeyechonews";
 
 export const Register = catchAsyncErrors(async (req, res, next) => {
     try {
+        // console.log(req.body);
         const { name, email, phone, password, role } = req.body;
         if (!name || !email || !phone || !password || !role) {
             throw new ErrorHandler("Please Fill All Fields", 401);
@@ -103,10 +104,18 @@ export const Logout = catchAsyncErrors(async (req, res, next) => {
 
 
 export const getUser = catchAsyncErrors(async(req, res, next) => {
-    const user = req.user;
-
-    res.status(200).json({
-        success: true,
-        user
-    })
+    
+    try {
+        const user = req.user;
+        res.status(200).json({
+            success: true,
+            user
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: "User Not find"
+        })
+        console.log(error);
+    }
 })
