@@ -37,7 +37,7 @@ const HeroSection = () => {
                 className="mySwiper h-[550px] px-10"
             >
                 <SwiperSlide className="swiper-slide">
-                    <div className='h-full'>
+                    <div className='h-full  '>
                         <img src={slider1} alt="slider1" className="w-full h-full object-cover" />
                     </div>
                     <div className="px-[50px] md:px-0 absolute inset-0 flex items-center flex-col w-full text-center justify-center bg-[#000000af]">
@@ -52,7 +52,7 @@ const HeroSection = () => {
                     </div>
                 </SwiperSlide>
                 <SwiperSlide className="swiper-slide">
-                    <div className='h-full'>
+                    <div className='h-full  '>
                         <img src={slider2} alt="slider1" className="w-full h-full object-cover" />
                     </div>
                     <div className="px-[50px] md:px-0 absolute inset-0 flex items-center flex-col w-full text-center justify-center bg-[#000000af]">
@@ -67,7 +67,7 @@ const HeroSection = () => {
                     </div>
                 </SwiperSlide>
                 <SwiperSlide className="swiper-slide">
-                    <div className='h-full'>
+                    <div className='h-full  '>
                         <img src={slider3} alt="slider1" className="w-full h-full object-cover" />
                     </div>
                     <div className="px-[50px] md:px-0 absolute inset-0 flex items-center flex-col w-full text-center justify-center bg-[#000000af]">

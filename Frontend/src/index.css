@@ -16,5 +16,11 @@
     stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
     stroke-dasharray: 125.6;
     transform: rotate(-90deg);
-  }
+}
+.swiper-button-next:after, .swiper-rtl .swiper-button-prev:after{
+    color: #D52636;
+}
+.swiper-button-prev:after, .swiper-rtl .swiper-button-prev:after{
+    color: #D52636;
+}
   

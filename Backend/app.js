@@ -5,6 +5,8 @@ import { dbConnection } from './db/database.js';
 import postRouter from './routes/postRouter.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import multer  from 'multer'
+const upload = multer({ dest: 'uploads/' })
 
 dotenv.config({path: './config/.env'});
 
