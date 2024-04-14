@@ -2,8 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { isAuthorizedContext } from "../context/CustomContext";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import axios from 'axios';
 
 const CreatePost = () => {
+  const BACKEND_URI = import.meta.env.VITE_BACKEND_URI;
+
   const navigate = useNavigate();
   const { isAuthorized, user } = useContext(isAuthorizedContext);
 
@@ -15,8 +18,6 @@ const CreatePost = () => {
     description: ""
   })
 
-  console.log(postData)
-
   const postChange = (e) => {
     const {name, value} = e.target;
     setPostData(() =>{
@@ -25,6 +26,36 @@ const CreatePost = () => {
             [name]: value
         }
     })
+  }
+
+  const handlePostSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const {title, category, expirationDate, tags, description} = postData;
+      const res = await axios.post(`${BACKEND_URI}/api/v1/post/post`,
+        {title, category, expirationDate, tags, description},
+        {headers: {
+            "Content-Type": "application/json"
+          },
+          withCredentials: true
+        }
+      )
+
+      toast.success(res.data.message);
+      setPostData({
+        title: "",
+        category: "",
+        expirationDate: "",
+        tags: "",
+        description: ""
+      })
+      
+    } catch (error) {
+      console.log(error);
+      toast.error(`an error occured:- ${error}`);
+    }
+
   }
 
   useEffect(() => {
@@ -41,7 +72,7 @@ const CreatePost = () => {
           <h3 className="text-2xl text-center font-bold mb-4 text-[#D52636]">
             Post New Post
           </h3>
-          <form>
+          <form onSubmit={handlePostSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
             <div>
             <label htmlFor="postTitle" className="text-gray-600 mb-2 block">Title</label>
