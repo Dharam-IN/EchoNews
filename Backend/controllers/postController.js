@@ -2,6 +2,7 @@ import { catchAsyncErrors } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/error.js";
 import postSchema from "../models/postSchema.js";
 
+// Post
 export const Post = catchAsyncErrors(async (req, res, next) => {
     // Check Role 
     const {role} = req.user;
@@ -31,5 +32,16 @@ export const Post = catchAsyncErrors(async (req, res, next) => {
         post
     })
 
+})
 
+
+
+// Get All
+export const getallposts = catchAsyncErrors(async (req, res, next) => {
+    const posts = await postSchema.find({expired: false});
+    console.log(posts);
+    res.status(200).json({
+        success: true,
+        posts
+    })
 })
