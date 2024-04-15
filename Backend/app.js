@@ -5,32 +5,32 @@ import { dbConnection } from './db/database.js';
 import postRouter from './routes/postRouter.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import multer  from 'multer'
-const upload = multer({ dest: 'uploads/' })
+import multer from 'multer';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
-dotenv.config({path: './config/.env'});
+dotenv.config({ path: './config/.env' });
 
 const app = express();
 
-// app.use(
-//     cors({
-//         origin: process.env.FRONTEND_URL,
-//         method: ["GET", "POST", "DELETE", "PUT"],
-//         credentials: true,
-//     })
-// );
-const corsOptions ={
-    origin: process.env.FRONTEND_URL,
-    credentials:true,
-    optionSuccessStatus:200
+const corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+  optionSuccessStatus: 200
 }
-
 
 // Middleware
 app.use(cookieParser());
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Get current directory path using import.meta.url
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve static files from the 'uploads' directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/post", postRouter);

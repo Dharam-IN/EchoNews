@@ -9,10 +9,10 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
       const uniqueSuffix = Date.now();
-      cb(null, uniqueSuffix + file.originalname)
+      cb(null, file.originalname)
     }
 });
-  
+
 const upload = multer({ storage: storage });
 
 const router = express.Router();

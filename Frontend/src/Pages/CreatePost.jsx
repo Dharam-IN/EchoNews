@@ -61,6 +61,7 @@ const CreatePost = () => {
         tags: "",
         description: "",
       });
+      setPostImg(null)
     } catch (error) {
       console.log(error);
       toast.error(`An error occurred: ${error}`);
