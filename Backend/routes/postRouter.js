@@ -1,6 +1,6 @@
 import express from 'express';
 import { isAuthenticated } from '../middlewares/auth.js';
-import { Post, getallposts } from '../controllers/postController.js';
+import { Post, getMyPosts, getallposts, getsinglepost } from '../controllers/postController.js';
 import multer from 'multer';
 
 const storage = multer.diskStorage({
@@ -22,5 +22,11 @@ router.post("/post", isAuthenticated, upload.single('postimage'), Post);
 
 // Get All Posts
 router.get("/getall", getallposts);
+
+// Post Details
+router.get("/:id", isAuthenticated, getsinglepost);
+
+// My Posts
+router.get("/getmyposts", isAuthenticated, getMyPosts);
 
 export default router;

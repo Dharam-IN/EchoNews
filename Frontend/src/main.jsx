@@ -11,6 +11,8 @@ import Signup from './Components/Signup.jsx'
 import { IsAuthorizedContextProvider, isAuthorizedContext } from './context/CustomContext.jsx'
 import axios from 'axios'
 import CreatePost from './Pages/CreatePost.jsx'
+import PostDetail from './Components/common/PostDetail.jsx'
+import NotFound from './Pages/NotFound.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,10 +23,11 @@ const router = createBrowserRouter(
       <Route path='/login' element={<Login/>}/>
       <Route path='/signup' element={<Signup/>}/>
       <Route path='/createpost' element={<CreatePost/>}/>
+      <Route path='/post/:id' element={<PostDetail/>}/>
+      <Route path='/*' element={<NotFound/>}/>
     </Route>
   )
 )
-
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(

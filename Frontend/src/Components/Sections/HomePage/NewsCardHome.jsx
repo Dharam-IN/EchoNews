@@ -5,7 +5,6 @@ import NewsCard from '../../common/NewsCard'
 const NewsCardHome = () => {
   const BACKEND_URI = import.meta.env.VITE_BACKEND_URI;
   const [postData, setPostData] = useState([]);
-
   useEffect( () => {
     const fetchData = async () => {
       try {
@@ -22,8 +21,6 @@ const NewsCardHome = () => {
     fetchData();
   }, [])
 
-  console.log(postData)
-
   return (
     <>
       {/* <NewsCard/> */}
@@ -37,8 +34,7 @@ const NewsCardHome = () => {
                     postData.map((data) => {
                     return(
                         <div key={data.title}>
-                        {console.log(`${BACKEND_URI}/uploads/${data.postimage}`)}
-                        <NewsCard postimageurl={data.postimage} posttitle={data.title} postdesc={data.description}/>
+                        <NewsCard postimageurl={data.postimage} posturl={data._id} posttitle={data.title} postdesc={data.description}/>
                         </div>
                     )
                     })
